@@ -135,7 +135,8 @@ def load_scan(saved_plan: SavedScanIterator, dataset: Dataset, context: Dict[str
         produced=saved_plan.produced,
         cumulative_produced=saved_plan.cumulative_produced,
         cumulative_cardinality=saved_plan.cumulative_cardinality,
-        stages=saved_plan.stages)
+        stages=saved_plan.stages,
+        scans=saved_plan.scans)
 
 
 def load_values(saved_plan: SavedValuesIterator, dataset: Dataset, context: Dict[str, Any] = {}) -> PreemptableIterator:

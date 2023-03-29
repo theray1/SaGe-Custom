@@ -175,6 +175,16 @@ class ScanIterator(PreemptableIterator):
         context['cost__cout'] *= selectivity
         return context['cost__cout']
 
+    def update_scans(self, context: Dict[str, Any] = ...) -> int:
+        """Compute and update operators number of scans.
+
+        This function assumes that only nested loop joins are used.
+
+        Returns: The number of scans of the query for the given plan.
+        """
+        
+        return self._scans
+
     def save(self) -> SavedScanIterator:
         """Save and serialize the iterator as a Protobuf message"""
         saved_scan = SavedScanIterator()
@@ -201,4 +211,5 @@ class ScanIterator(PreemptableIterator):
         saved_scan.coverage = self._coverage
         saved_scan.cost = self._cost
         saved_scan.scans = self._scans
+        print(saved_scan.scans)
         return saved_scan

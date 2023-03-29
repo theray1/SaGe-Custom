@@ -59,6 +59,16 @@ class PreemptableIterator(ABC):
         pass
 
     @abstractmethod
+    def update_scans(self, context: Dict[str, Any] = {}) -> int:
+        """Compute and update operators cost.
+
+        This function assumes that only nested loop joins are used.
+
+        Returns: The cost of the query for the given plan.
+        """
+        pass
+
+    @abstractmethod
     def save(self) -> Any:
         """Save and serialize the iterator as a Protobuf message"""
         pass

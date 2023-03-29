@@ -111,6 +111,7 @@ async def execute_query(
 
         coverage = 1.0 if is_done else plan.update_coverage(context={})
         cost = plan.update_cost(context={})
+        scans = plan.update_scans(context={})
 
         # plan.explain()
 
@@ -136,7 +137,8 @@ async def execute_query(
             "export": export_time,
             "metrics": {
                 "coverage": coverage,
-                "cost": cost}}
+                "cost": cost,
+                "scans": scans}}
         return (solutions, next_page, stats)
     except Exception as err:
         # abort all ongoing transactions, then forward the exception

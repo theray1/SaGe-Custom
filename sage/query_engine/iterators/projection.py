@@ -80,6 +80,16 @@ class ProjectionIterator(PreemptableIterator):
         """
         self._cost = self._source.update_cost(context=context)
         return self._cost
+    
+    def update_scans(self, context: Dict[str, Any] = ...) -> int:
+        """Compute and update operators number of scans.
+
+        This function assumes that only nested loop joins are used.
+
+        Returns: The number of scans of the query for the given plan.
+        """
+        self._scans = self._source.update_scans(context=context)
+        return self._scans
 
     def save(self) -> SavedProjectionIterator:
         """Save and serialize the iterator as a Protobuf message"""
