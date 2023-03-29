@@ -1,0 +1,72 @@
+[tool.poetry]
+name = "sage-custom"
+version = "2.3.0"
+description = "Sage: a preemptive SPARQL query engine for online Knowledge Graphs"
+repository = "https://github.com/sage-org/sage-engine"
+authors = [ "Thomas Minier <tminier01@gmail.com>",
+	"Julien Aimonier-Davat <julien.aimonier-davat@univ-nantes.fr>",
+	"Pascal Molli <pascal.molli@univ-nantes.fr>",
+	"Hala Skaf <hala.skaf@univ-nantes.fr>" ]
+keywords = [ "rdf", "sparql", "query engine" ]
+classifiers = [
+  "Topic :: Database :: Database Engines/Servers",
+  "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+  "Topic :: Scientific/Engineering"
+]
+readme = "README.md"
+license = "MIT"
+packages = [
+  { include = "sage" }
+]
+include = [ "README.md" ]
+exclude = [ "tests" ]
+
+[tool.poetry.scripts]
+sage = "sage.cli.http_server:start_sage_server"
+sage-query = "sage.cli.commons:sage_query"
+sage-debug= "sage.cli.debug:sage_query_debug"
+sage-explain= "sage.cli.explain:explain"
+sage-grpc = "sage.cli.grpc_server:start_grpc_server"
+sage-postgres-init = "sage.cli.postgres:init_postgres"
+sage-postgres-index = "sage.cli.postgres:index_postgres"
+sage-postgres-put = "sage.cli.postgres:put_postgres"
+sage-sqlite-init = "sage.cli.sqlite:init_sqlite"
+sage-sqlite-index = "sage.cli.sqlite:index_sqlite"
+sage-sqlite-put = "sage.cli.sqlite:put_sqlite"
+sage-hbase-init = "sage.cli.hbase:init_hbase"
+sage-hbase-put = "sage.cli.hbase:put_hbase"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+uvloop = "0.16.0"
+PyYAML = "5.4.1"
+protobuf = "3.15.7"
+click = "7.1.2"
+fastapi = "0.63.0"
+uvicorn = "0.13.4"
+grpcio = "^1.34"
+coloredlogs = "15.0"
+pylru = "^1.0"
+pyparsing = "^2.4.7"
+rdflib = { git = "https://github.com/JulienDavat/rdflib.git", branch = "rl-xp" }
+# optional dependencies
+pybind11 = { version = "2.2.4", optional = true }
+hdt = { version = "2.3", optional = true }
+psycopg2-binary = { version = "2.8.6", optional = true }
+happybase = { version = "1.2.0", optional = true }
+
+[tool.poetry.extras]
+hdt = ["pybind11", "hdt"]
+postgres = ["psycopg2-binary"]
+hbase = ["happybase"]
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2"
+pytest-asyncio = "^0.14"
+requests = "^2.25"
+sphinx = "^2.3"
+sphinx_rtd_theme = "^0.4.3"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
