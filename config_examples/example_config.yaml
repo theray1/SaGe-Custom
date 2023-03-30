@@ -1,0 +1,11 @@
+name: SaGe Test server
+maintainer: Shi Zue
+quota: 500
+max_results: 200
+graphs:
+-
+  name: bsbm
+  uri: http://example.org/graph
+  description: DefinitelyAUsefulDescription
+  backend: hdt-file
+  file: /media/theray1/Nouveau nom/data/wdbench.hdt
