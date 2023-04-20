@@ -182,7 +182,10 @@ def load_nlj(saved_plan: SavedIndexJoinIterator, dataset: Dataset, context: Dict
     current_mappings = None
     if len(saved_plan.muc) > 0:
         current_mappings = dict(saved_plan.muc)
-    return IndexJoinIterator(left, right, current_mappings=current_mappings)
+    l_scans = saved_plan.local_scans
+    print("l_scans")
+    print(l_scans)
+    return IndexJoinIterator(left, right, current_mappings=current_mappings, local_scans=l_scans)
 
 
 def load_union(saved_plan: SavedBagUnionIterator, dataset: Dataset, context: Dict[str, Any] = {}) -> PreemptableIterator:

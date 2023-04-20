@@ -71,6 +71,7 @@ message SavedIndexJoinIterator {
   map<string, string> muc = 13;
   float coverage = 14;
   float cost = 15;
+  int64 local_scans = 16;
 }
 
 message SavedBagUnionIterator {

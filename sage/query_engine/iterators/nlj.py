@@ -18,7 +18,8 @@ class IndexJoinIterator(PreemptableIterator):
 
     def __init__(
         self, left: PreemptableIterator, right: PreemptableIterator,
-        current_mappings: Optional[Dict[str, str]] = None
+        current_mappings: Optional[Dict[str, str]] = None,
+        local_scans: int = 0
     ):
         super(IndexJoinIterator, self).__init__()
         self._left = left
@@ -26,6 +27,7 @@ class IndexJoinIterator(PreemptableIterator):
         self._current_mappings = current_mappings
         self._coverage = 0.0
         self._cost = 0.0
+        self._local_scans = local_scans
         self._scans = 0
 
     def __repr__(self) -> str:
@@ -67,6 +69,9 @@ class IndexJoinIterator(PreemptableIterator):
                 self._current_mappings = await self._left.next(context=context)
                 if self._current_mappings is None:
                     return None
+                #HERE I SHOULD INCREMENT SCANS?
+                self._local_scans += 1
+                #I DID BUT MAYBE IT S NOT THE RIGHT PLACE OR WAY TO DO IT
                 self._right.next_stage(self._current_mappings)
             else:
                 mappings = await self._right.next(context=context)
@@ -105,6 +110,7 @@ class IndexJoinIterator(PreemptableIterator):
         """
         self._scans = self._left.update_scans(context=context)
         self._scans += self._right.update_scans(context=context)
+        self._scans += self._local_scans
         return self._scans
     
 
@@ -121,4 +127,6 @@ class IndexJoinIterator(PreemptableIterator):
             pyDict_to_protoDict(self._current_mappings, saved_join.muc)
         saved_join.coverage = self._coverage
         saved_join.cost = self._cost
+        saved_join.local_scans = self._local_scans
+        print(saved_join)
         return saved_join

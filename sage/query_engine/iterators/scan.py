@@ -211,5 +211,4 @@ class ScanIterator(PreemptableIterator):
         saved_scan.coverage = self._coverage
         saved_scan.cost = self._cost
         saved_scan.scans = self._scans
-        print(saved_scan.scans)
         return saved_scan

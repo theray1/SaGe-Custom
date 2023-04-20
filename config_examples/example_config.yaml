@@ -8,4 +8,4 @@ graphs:
   uri: http://example.org/graph
   description: DefinitelyAUsefulDescription
   backend: hdt-file
-  file: /media/theray1/Nouveau nom/data/wdbench.hdt
+  file: /media/theray1/Files/Files/data/wdbench.hdt
