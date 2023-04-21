@@ -116,7 +116,7 @@ class ScanIterator(PreemptableIterator):
         Returns: A set of solution mappings, or `None` if none was produced during this call.
         """
         while self._mu is None:
-            self._scans += 1
+            
             mappings = self._source.next()
             if mappings is None:
                 return None
@@ -130,6 +130,7 @@ class ScanIterator(PreemptableIterator):
             mappings = {**self._current_mappings, **self._mu}
         else:
             mappings = self._mu
+        self._scans += 1    
         self._mu = None
         self._produced += 1
         self._cumulative_produced += 1

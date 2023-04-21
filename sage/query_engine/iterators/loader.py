@@ -183,8 +183,6 @@ def load_nlj(saved_plan: SavedIndexJoinIterator, dataset: Dataset, context: Dict
     if len(saved_plan.muc) > 0:
         current_mappings = dict(saved_plan.muc)
     l_scans = saved_plan.local_scans
-    print("l_scans")
-    print(l_scans)
     return IndexJoinIterator(left, right, current_mappings=current_mappings, local_scans=l_scans)
 
 

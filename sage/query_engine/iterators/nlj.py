@@ -64,14 +64,12 @@ class IndexJoinIterator(PreemptableIterator):
 
         Returns: A set of solution mappings, or `None` if none was produced during this call.
         """
+        self._local_scans += 1
         while True:
             if self._current_mappings is None:
                 self._current_mappings = await self._left.next(context=context)
                 if self._current_mappings is None:
                     return None
-                #HERE I SHOULD INCREMENT SCANS?
-                self._local_scans += 1
-                #I DID BUT MAYBE IT S NOT THE RIGHT PLACE OR WAY TO DO IT
                 self._right.next_stage(self._current_mappings)
             else:
                 mappings = await self._right.next(context=context)
@@ -128,5 +126,4 @@ class IndexJoinIterator(PreemptableIterator):
         saved_join.coverage = self._coverage
         saved_join.cost = self._cost
         saved_join.local_scans = self._local_scans
-        print(saved_join)
         return saved_join
