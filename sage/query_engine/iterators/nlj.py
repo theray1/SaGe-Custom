@@ -64,7 +64,6 @@ class IndexJoinIterator(PreemptableIterator):
 
         Returns: A set of solution mappings, or `None` if none was produced during this call.
         """
-        self._local_scans += 1
         while True:
             if self._current_mappings is None:
                 self._current_mappings = await self._left.next(context=context)
